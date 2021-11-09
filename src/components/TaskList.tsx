@@ -15,15 +15,58 @@ export function TaskList() {
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
   function handleCreateNewTask() {
-    // Crie uma nova task com um id random, não permita criar caso o título seja vazio.
+        // Crie uma nova task com um id random, não permita criar caso o título seja vazio.
+
+    if(newTaskTitle == ""){
+      return 
+    }else{
+    }
+    console.log(newTaskTitle)
+    const addNewTaskToState = {
+      id: Math.random(),
+      title: newTaskTitle,
+      isComplete: false
+    }
+    setTasks([...tasks , addNewTaskToState ])
+    setNewTaskTitle('')
   }
 
   function handleToggleTaskCompletion(id: number) {
     // Altere entre `true` ou `false` o campo `isComplete` de uma task com dado ID
+    /* PRIMEIRA TENTATIVA
+    const taskChangeisComplete = tasks.find(tasks => {tasks.id == id ; tasks.isComplete = true ; tasks.isComplete = false
+    } )
+    console.log(taskChangeisComplete)
+    */
+
+   /* SEGUNDA TENTATIVA ---- funcionou, consegui trocar os true para false- mas não houve reação no site. gostaria de saber porque
+    for(var i = 0; i < tasks.length ; i++){
+      if(tasks[i].id == id){
+        if(tasks[i].isComplete == false){
+          tasks[i].isComplete = true
+        }else{
+          tasks[i].isComplete = false
+        }
+      }else{}
+    }
+
+    const newTasksArray = tasks
+    console.log(newTasksArray)
+    return setTasks(newTasksArray)
+    */
+
+    const newTasksArray = tasks.map(tasks => tasks.id === id ? {
+      ...tasks,
+      isComplete: !tasks.isComplete
+    } : tasks)
+    console.log(newTasksArray)
+    setTasks(newTasksArray )
   }
 
   function handleRemoveTask(id: number) {
-    // Remova uma task da listagem pelo ID
+    
+    const filteredTaks = tasks.filter(tasks => tasks.id != id)
+    setTasks(filteredTaks)
   }
 
   return (
